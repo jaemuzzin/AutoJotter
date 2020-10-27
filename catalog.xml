@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/C:/Users/Jae/Documents/freedomforge/trunk/txt2svg/svg11.dtd" uri="xml-resources/jaxb/svg11/svg11.dtd"/>
+</catalog>
