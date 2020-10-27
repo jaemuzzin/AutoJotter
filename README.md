@@ -1,4 +1,4 @@
-
+![Example writing](https://raw.githubusercontent.com/JaeMuzzin/AutoJotter/main/example.png)
 ######### AutoJotter ######## 
 ~ ~ Hand writing software ~ ~
 ----------[v1.0]-------------
