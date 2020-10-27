@@ -3,12 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Jae/Documents/freedomforge/trunk/txt2svg/src/com/piro/bezier/BezierPath.java</file>
-            <file>file:/C:/Users/Jae/Documents/freedomforge/trunk/txt2svg/src/com/piro/bezier/BezierListProducer.java</file>
-            <file>file:/C:/Users/Jae/Documents/freedomforge/trunk/txt2svg/src/autojotter/gui/MainWindow.java</file>
-            <file>file:/C:/Users/Jae/Documents/freedomforge/trunk/txt2svg/src/glyphs/a.svg</file>
-            <file>file:/C:/Users/Jae/Documents/freedomforge/trunk/txt2svg/src/autojotter/AutoJotter.java</file>
-            <file>file:/C:/Users/Jae/Documents/freedomforge/trunk/txt2svg/src/autojotter/Glyph.java</file>
+            <file>file:/C:/Users/Jae/Documents/AutoJotter/src/com/piro/bezier/BezierHistory.java</file>
+            <file>file:/C:/Users/Jae/Documents/AutoJotter/src/com/piro/bezier/BezierListProducer.java</file>
+            <file>file:/C:/Users/Jae/Documents/AutoJotter/src/com/piro/bezier/Bezier.java</file>
         </group>
     </open-files>
 </project-private>
