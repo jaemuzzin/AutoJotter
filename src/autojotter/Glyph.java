@@ -21,7 +21,7 @@ public class Glyph {
     public Glyph() {
     }
 
-    public Glyph(String svgFile, char rep, String up, String down) {
+    public Glyph(String svgFile, char rep, String up, String down, boolean svg) {
         this.rep = rep;
         Pattern regex = Pattern.compile("[^\\w]d=\"([\\w\\. ,-]*)\"");
         Matcher mathcer = regex.matcher(svgFile);
@@ -38,14 +38,14 @@ public class Glyph {
                 SimpleMatrix sm = new SimpleMatrix(new double[][]{new double[]{p.x}, new double[]{p.y}, new double[]{1}});
                 next.add(sm);
             }
-            paths.add(new Path(next, up, down));
+            paths.add(new Path(next, up, down, svg));
         }
     }
 
-    public Glyph(List<Path> opaths, char rep, String upcommand, String downcommand) {
+    public Glyph(List<Path> opaths, char rep, String upcommand, String downcommand, boolean svg) {
         this.rep = rep;
         paths = opaths.stream().map(p
-                -> new Path(p.getPoints().stream().collect(Collectors.toList()), upcommand, downcommand))
+                -> new Path(p.getPoints().stream().collect(Collectors.toList()), upcommand, downcommand, svg))
                 .collect(Collectors.toList());
     }
 

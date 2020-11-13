@@ -2,9 +2,13 @@ package autojotter.gui;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.io.StringReader;
-import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -35,6 +39,7 @@ public class MainWindow extends javax.swing.JFrame {
         txtInput = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
+        chkSVGOutput = new javax.swing.JCheckBox();
         chkRotate90 = new javax.swing.JCheckBox();
         chkItalics = new javax.swing.JCheckBox();
         jLabel11 = new javax.swing.JLabel();
@@ -65,6 +70,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        btnSaveFile = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -77,7 +83,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel1.setText("Input Text:");
         getContentPane().add(jLabel1);
 
-        jScrollPane1.setMinimumSize(new java.awt.Dimension(326, 546));
+        jScrollPane1.setMinimumSize(new java.awt.Dimension(286, 150));
         jScrollPane1.setPreferredSize(new java.awt.Dimension(286, 150));
 
         txtInput.setColumns(40);
@@ -93,6 +99,9 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel1.setLayout(new java.awt.BorderLayout(10, 10));
 
         jPanel10.setLayout(new javax.swing.BoxLayout(jPanel10, javax.swing.BoxLayout.Y_AXIS));
+
+        chkSVGOutput.setText("SVG Output (Uncheck for Gcode)");
+        jPanel10.add(chkSVGOutput);
 
         chkRotate90.setSelected(true);
         chkRotate90.setText("Rotate 90");
@@ -216,16 +225,17 @@ public class MainWindow extends javax.swing.JFrame {
 
         jPanel4.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
-        jPanel5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        jPanel5.setLayout(new java.awt.BorderLayout());
 
-        jLabel8.setText("Output GCode:");
-        jPanel5.add(jLabel8);
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("Output File:");
+        jPanel5.add(jLabel8, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(jPanel5, java.awt.BorderLayout.NORTH);
 
         jPanel2.add(jPanel4, java.awt.BorderLayout.CENTER);
 
-        jButton1.setText("Generate Gcode");
+        jButton1.setText("Generate File");
         jButton1.setToolTipText("");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -233,6 +243,14 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
         jPanel3.add(jButton1);
+
+        btnSaveFile.setText("Save File");
+        btnSaveFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveFileActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnSaveFile);
 
         jButton2.setText("Exit");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -268,7 +286,7 @@ public class MainWindow extends javax.swing.JFrame {
         PrintStream err = new PrintStream(errBytes);
         try {
             autojotter.AutoJotter.run((double) txtWidth.getValue(), (double) txtHeight.getValue(), (int) txtColumns.getValue(),
-                    (int) txtRows.getValue(), txtUp.getText(), txtDown.getText(), (Integer) txtFeedRate.getValue(), chkRotate90.isSelected(), chkItalics.isSelected(),
+                    (int) txtRows.getValue(), txtUp.getText(), txtDown.getText(), (Integer) txtFeedRate.getValue(), chkRotate90.isSelected(), chkItalics.isSelected(), chkSVGOutput.isSelected(),
                     out, err, new BufferedReader(new StringReader(txtInput.getText())));
             txtGcodeOutput.setText(new String(outBytes.toByteArray()));
             JOptionPane.showMessageDialog(this, "This is a preview of your formatted text:\r\n\r\n" + new String(errBytes.toByteArray()));
@@ -286,6 +304,28 @@ public class MainWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
         recalcParams();
     }//GEN-LAST:event_txtCharHeightStateChanged
+
+    private void btnSaveFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveFileActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Choose save location");        
+        fileChooser.setSelectedFile(new File("output." + (chkSVGOutput.isSelected() ? "svg" : "ngc")));
+        int userSelection = fileChooser.showSaveDialog(this);
+        
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+            try{
+            PrintWriter pw = new PrintWriter(new FileOutputStream(fileToSave));
+            pw.write(txtGcodeOutput.getText());
+            pw.flush();
+            pw.close();
+                JOptionPane.showMessageDialog(this, "Saved to "+fileToSave.getAbsolutePath());
+            }catch(FileNotFoundException e){
+                JOptionPane.showMessageDialog(this, "File not found, please select different location");
+            }
+        }
+    }//GEN-LAST:event_btnSaveFileActionPerformed
     private void recalcParams() {
         txtCharWidth.getModel().setValue((Double) txtCharHeight.getValue() / 2);
         txtWidth.getModel().setValue(((Double) txtCharWidth.getValue()) * (int) txtColumns.getValue());
@@ -331,8 +371,10 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSaveFile;
     private javax.swing.JCheckBox chkItalics;
     private javax.swing.JCheckBox chkRotate90;
+    private javax.swing.JCheckBox chkSVGOutput;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
