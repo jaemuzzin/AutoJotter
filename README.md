@@ -1,12 +1,12 @@
 ![Example writing](https://raw.githubusercontent.com/JaeMuzzin/AutoJotter/main/example.png)
 ######### AutoJotter ######## 
 ~ ~ Hand writing software ~ ~
-----------[v1.0]-------------
+----------[v1.1]-------------
 
-AutoJotter is open source handwriting software for pen plotters that generates movement instructions from plain text.
+AutoJotter is open source handwriting software for pen plotters and CNC machines that generates handwriting movement instructions from plain text.
 
-* Provide AutoJotter with plain text to generate universal G-Code programs for home pen plotters and other machines.
-* Writes realistic hand printing in a single stroke, does not outline fonts like most tools.
+* Provide AutoJotter with any plain text.  It will generate single stroke handwriting as a generic G-Code program, or SVG File (aka Inkscape)
+* Writes realistic hand writing in a single stroke, does not outline fonts like most tools.
 * Can write characters of any size.
 * GUI and command line for scripting.
 * Customizable to different machines.
@@ -33,3 +33,6 @@ eg
 echo hello | java -jar autojotter.jar 6 6.9 40 25 "S3 M500" "S3 M850" 50 y y
 
 
+Version History
+1.0 - Initial Release
+1.1 - Added SVG output and Save file dialog
